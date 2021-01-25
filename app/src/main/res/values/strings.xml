@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">AndroidRestaurant</string>
+    <string name="app_name">McDroid</string>
+    <string name="app_welcome">Bienvevue chez</string>
+    <string name="app_entree">Entrées</string>
+    <string name="app_plat">Plats</string>
+    <string name="app_dessert">Desserts</string>
+    <string name="img_descripton_mcdroid">image d\'android</string>
 </resources>
