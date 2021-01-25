@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import fr.isen.delesse.androidrestaurant.category.CategoryActivity
 import fr.isen.delesse.androidrestaurant.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
