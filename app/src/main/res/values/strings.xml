@@ -9,6 +9,7 @@
     <string name="img_descripton_mcdroid">image d\'android</string>
     <string name="img_descripton_entrees">image d\'entree</string>
     <string name="img_descripton_desserts">image de dessert</string>
+    <string name="img_descripton_plat">image de plat</string>
     <!-- toasts  -->
     <string name="toast_entrees">Entrées ...</string>
     <string name="toast_plats">Plats ...</string>
