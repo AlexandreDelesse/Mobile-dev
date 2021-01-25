@@ -7,97 +7,102 @@
     tools:context=".HomeActivity">
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="128dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/app_welcome"
-        android:textAlignment="viewStart"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.113"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_plat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_plat"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
-
-    <Button
-        android:id="@+id/button_entree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="@string/app_entree"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/button_plat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button_dessert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/app_dessert"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_plat" />
-
-    <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_width="130dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="cursive"
         android:text="@string/app_name"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/orange"
-        android:textSize="30sp"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="64dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/img_descripton_mcdroid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mcdroid" />
+
+    <TextView
+        android:id="@+id/textEntrees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_entree"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view"
         android:layout_width="100dp"
         android:layout_height="1dp"
         android:background="@color/orange"
-        app:layout_constraintBottom_toTopOf="@+id/button_plat"
+        app:layout_constraintBottom_toTopOf="@+id/textPlats"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_entree" />
+        app:layout_constraintTop_toBottomOf="@+id/textEntrees" />
+
+    <TextView
+        android:id="@+id/textDesserts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/app_dessert"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textPlats" />
 
     <View
         android:id="@+id/view2"
         android:layout_width="100dp"
         android:layout_height="1dp"
         android:background="@color/orange"
-        app:layout_constraintBottom_toTopOf="@+id/button_dessert"
+        app:layout_constraintBottom_toTopOf="@+id/textDesserts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_plat" />
+        app:layout_constraintTop_toBottomOf="@+id/textPlats" />
+
+    <TextView
+        android:id="@+id/textPlats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/app_plat"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textEntrees" />
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="61dp"
-        android:layout_height="73dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:contentDescription="@string/img_descripton_mcdroid"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mcdroid" />
+        android:id="@+id/imageView3"
+        android:layout_width="45dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/textEntrees"
+        app:layout_constraintTop_toTopOf="@+id/textEntrees"
+        app:srcCompat="@drawable/iconentree" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="35dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textDesserts"
+        app:layout_constraintStart_toEndOf="@+id/textDesserts"
+        app:srcCompat="@drawable/icondessert" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

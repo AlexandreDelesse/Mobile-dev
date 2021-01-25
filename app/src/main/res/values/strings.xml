@@ -1,8 +1,16 @@
 <resources>
+    <!-- textes  -->
     <string name="app_name">McDroid</string>
     <string name="app_welcome">Bienvevue chez</string>
     <string name="app_entree">Entrées</string>
     <string name="app_plat">Plats</string>
     <string name="app_dessert">Desserts</string>
+    <!-- images  -->
     <string name="img_descripton_mcdroid">image d\'android</string>
+    <string name="img_descripton_entrees">image d\'entree</string>
+    <string name="img_descripton_desserts">image de dessert</string>
+    <!-- toasts  -->
+    <string name="toast_entrees">Entrées ...</string>
+    <string name="toast_plats">Plats ...</string>
+    <string name="toast_desserts">Desserts ...</string>
 </resources>
