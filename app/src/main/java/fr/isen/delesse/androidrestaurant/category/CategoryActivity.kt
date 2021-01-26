@@ -74,10 +74,11 @@ class CategoryActivity : AppCompatActivity() {
         queue.add(jsonObjectRequest)
     }
 
-    private fun loadList(item: List<Dish>?) {
-        var dishList = item?.map { it.name }
+    private fun loadList(dishList: List<Dish>?) {
         dishList?.let {
-            val adapter = CategoryAdapter(dishList)
+            val adapter = CategoryAdapter(it) { dish ->
+                Log.d("dish", "selected dish ${dish.name}")
+            }
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
             binding.recyclerView.adapter = adapter
         }
