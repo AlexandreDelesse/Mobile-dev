@@ -24,7 +24,16 @@ import org.json.JSONTokener
 class CategoryActivity : AppCompatActivity() {
 
     enum class ItemType {
-        ENTREES, PLATS, DESSERTS
+        ENTREES, PLATS, DESSERTS;
+
+        fun categoryTitle(item: ItemType?): String {
+            return when(item) {
+                ENTREES -> "Entrées"
+                PLATS -> "Plats"
+                DESSERTS -> "Desserts"
+                else -> ""
+            }
+        }
     }
 
     private lateinit var binding : ActivityCategoryBinding
@@ -33,13 +42,18 @@ class CategoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.d("CategoryActivity", "start of CategoryActivity")
         binding = ActivityCategoryBinding.inflate(layoutInflater)
-        //setContentView(R.layout.activity_category)
         setContentView(binding.root)
-        val selectedItem = intent.getSerializableExtra(HomeActivity.CATEGORY_NAME) as? ItemType
 
+        val selectedItem = intent.getSerializableExtra(HomeActivity.CATEGORY_NAME) as? ItemType
+        binding.categoryTitle.text = getCategoryTitle(selectedItem)
+
+        makeRequest(selectedItem)
+
+    }
+
+    private fun makeRequest(selectedItem: ItemType?) {
         val queue = Volley.newRequestQueue(this)
         val url = NetworkConstant.BASE_URL + NetworkConstant.PATH_MENU
-
         val jsonData = JSONObject()
         jsonData.put(NetworkConstant.ID_SHOP,1)
         val jsonObjectRequest = JsonObjectRequest(Request.Method.POST,
@@ -47,8 +61,8 @@ class CategoryActivity : AppCompatActivity() {
             jsonData,
             { response ->
                 val menuResult = GsonBuilder().create().fromJson(response.toString(), MenuResult::class.java)
-                var item = menuResult.data.firstOrNull { it.name == "Entrées" }
-                loadList(selectedItem, item.getAllDishName())
+                var item = menuResult.data.firstOrNull { it.name == getCategoryTitle(selectedItem) }
+                loadList(item?.items)
             },
             { error ->
                 error.message?.let {
@@ -56,42 +70,25 @@ class CategoryActivity : AppCompatActivity() {
                 } ?: run {
                     Log.d("request : ", error.toString())
                 }
-
             })
-
         queue.add(jsonObjectRequest)
-
-
-        binding.categoryTitle.text = getCategoryTitle(selectedItem)
-
-        //loadList(selectedItem)
     }
-    private fun loadList(item: ItemType?, list: List<String>) {
 
-        var entrees = listOf<String>("salade", "poêle de legume", "fruits de mer")
-        var plats = listOf<String>("gratin", "pizza", "pâtes")
-        var desserts = listOf<String>("gateau au chocolat", "salade de fruits", "glace")
-        var entries = listOf<String>()
-        when (item) {
-            ItemType.ENTREES -> entries = entrees
-            ItemType.PLATS -> entries = plats
-            ItemType.DESSERTS -> entries = desserts
+    private fun loadList(item: List<Dish>?) {
+        var dishList = item?.map { it.name }
+        dishList?.let {
+            val adapter = CategoryAdapter(dishList)
+            binding.recyclerView.layoutManager = LinearLayoutManager(this)
+            binding.recyclerView.adapter = adapter
         }
-        val adapter = CategoryAdapter(list)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
+
+
     }
     private fun getCategoryTitle( item: ItemType?): String {
         return when(item) {
-            ItemType.ENTREES -> getString(
-                R.string.app_entree
-            )
-            ItemType.PLATS -> getString(
-                R.string.app_plat
-            )
-            ItemType.DESSERTS -> getString(
-                R.string.app_dessert
-            )
+            ItemType.ENTREES -> getString(R.string.app_entree)
+            ItemType.PLATS -> getString(R.string.app_plat)
+            ItemType.DESSERTS -> getString(R.string.app_dessert)
             else -> ""
         }
     }
