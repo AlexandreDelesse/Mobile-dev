@@ -13,6 +13,8 @@ import com.google.gson.GsonBuilder
 import fr.isen.delesse.androidrestaurant.HomeActivity
 import fr.isen.delesse.androidrestaurant.R
 import fr.isen.delesse.androidrestaurant.databinding.ActivityCategoryBinding
+import fr.isen.delesse.androidrestaurant.network.Category
+import fr.isen.delesse.androidrestaurant.network.Dish
 import fr.isen.delesse.androidrestaurant.network.MenuResult
 import fr.isen.delesse.androidrestaurant.network.NetworkConstant
 import org.json.JSONArray
@@ -33,26 +35,20 @@ class CategoryActivity : AppCompatActivity() {
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         //setContentView(R.layout.activity_category)
         setContentView(binding.root)
+        val selectedItem = intent.getSerializableExtra(HomeActivity.CATEGORY_NAME) as? ItemType
 
         val queue = Volley.newRequestQueue(this)
         val url = NetworkConstant.BASE_URL + NetworkConstant.PATH_MENU
 
-
         val jsonData = JSONObject()
-        var jBody = JSONArray()
-
         jsonData.put(NetworkConstant.ID_SHOP,1)
         val jsonObjectRequest = JsonObjectRequest(Request.Method.POST,
             url,
             jsonData,
             { response ->
                 val menuResult = GsonBuilder().create().fromJson(response.toString(), MenuResult::class.java)
-                menuResult.data.forEach{ data ->
-                    Log.d("request", data.name)
-                    data.items.forEach{ item ->
-                        Log.d("item", item.name)
-                    }
-                }
+                var item = menuResult.data.firstOrNull { it.name == "Entrées" }
+                loadList(selectedItem, item.getAllDishName())
             },
             { error ->
                 error.message?.let {
@@ -65,12 +61,13 @@ class CategoryActivity : AppCompatActivity() {
 
         queue.add(jsonObjectRequest)
 
-        val selectedItem = intent.getSerializableExtra(HomeActivity.CATEGORY_NAME) as? ItemType
+
         binding.categoryTitle.text = getCategoryTitle(selectedItem)
 
-        loadList(selectedItem)
+        //loadList(selectedItem)
     }
-    private fun loadList(item: ItemType?) {
+    private fun loadList(item: ItemType?, list: List<String>) {
+
         var entrees = listOf<String>("salade", "poêle de legume", "fruits de mer")
         var plats = listOf<String>("gratin", "pizza", "pâtes")
         var desserts = listOf<String>("gateau au chocolat", "salade de fruits", "glace")
@@ -80,7 +77,7 @@ class CategoryActivity : AppCompatActivity() {
             ItemType.PLATS -> entries = plats
             ItemType.DESSERTS -> entries = desserts
         }
-        val adapter = CategoryAdapter(entries)
+        val adapter = CategoryAdapter(list)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
     }

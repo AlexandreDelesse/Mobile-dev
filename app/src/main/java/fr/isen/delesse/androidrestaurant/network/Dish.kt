@@ -7,4 +7,5 @@ class Dish(@SerializedName("name_fr") val name: String,
            val images: List<String>,
            val prices: List<Price>) {
 
+
 }
