@@ -32,92 +32,115 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/mcdroid" />
 
-    <TextView
-        android:id="@+id/textEntrees"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewEntree"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/app_entree"
-        android:textSize="30sp"
+        android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="100dp"
-        android:layout_height="1dp"
-        android:background="@color/orange"
-        app:layout_constraintBottom_toTopOf="@+id/textPlats"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEntrees" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textDesserts"
-        android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textEntrees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/app_entree"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:contentDescription="@string/img_descripton_entrees"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/iconentree" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewPlat"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/app_dessert"
-        android:textSize="30sp"
+        android:layout_margin="16dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPlats" />
+        app:layout_constraintTop_toBottomOf="@+id/cardViewEntree">
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="100dp"
-        android:layout_height="1dp"
-        android:background="@color/orange"
-        app:layout_constraintBottom_toTopOf="@+id/textDesserts"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPlats" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textPlats"
-        android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textPlats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="@string/app_plat"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:contentDescription="@string/img_descripton_plat"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/iconplat" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewDessert"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/app_plat"
-        android:textSize="30sp"
+        android:layout_margin="16dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEntrees" />
+        app:layout_constraintTop_toBottomOf="@+id/cardViewPlat">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="45dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="@string/img_descripton_entrees"
-        app:layout_constraintBottom_toBottomOf="@+id/textEntrees"
-        app:layout_constraintEnd_toStartOf="@+id/textEntrees"
-        app:layout_constraintTop_toTopOf="@+id/textEntrees"
-        app:srcCompat="@drawable/iconentree" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="39dp"
-        android:layout_height="38dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="@string/img_descripton_desserts"
-        app:layout_constraintBottom_toBottomOf="@+id/textDesserts"
-        app:layout_constraintEnd_toStartOf="@+id/textDesserts"
-        app:layout_constraintTop_toTopOf="@+id/textDesserts"
-        app:srcCompat="@drawable/icondessert" />
+            <TextView
+                android:id="@+id/textDesserts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/app_dessert"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView4"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="47dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="16dp"
-        android:contentDescription="@string/img_descripton_plat"
-        app:layout_constraintBottom_toBottomOf="@+id/textPlats"
-        app:layout_constraintStart_toEndOf="@+id/textPlats"
-        app:layout_constraintTop_toTopOf="@+id/textPlats"
-        app:srcCompat="@drawable/iconplat" />
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:contentDescription="@string/img_descripton_desserts"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icondessert" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
