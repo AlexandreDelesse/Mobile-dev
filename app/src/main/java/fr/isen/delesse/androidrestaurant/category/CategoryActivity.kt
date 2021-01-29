@@ -1,5 +1,6 @@
 package fr.isen.delesse.androidrestaurant.category
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
+import fr.isen.delesse.androidrestaurant.DishDetailActivity
 import fr.isen.delesse.androidrestaurant.HomeActivity
 import fr.isen.delesse.androidrestaurant.R
 import fr.isen.delesse.androidrestaurant.databinding.ActivityCategoryBinding
@@ -42,7 +44,8 @@ class CategoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.d("CategoryActivity", "start of CategoryActivity")
         binding = ActivityCategoryBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.loading_page)
+
 
         val selectedItem = intent.getSerializableExtra(HomeActivity.CATEGORY_NAME) as? ItemType
         binding.categoryTitle.text = getCategoryTitle(selectedItem)
@@ -63,6 +66,7 @@ class CategoryActivity : AppCompatActivity() {
                 val menuResult = GsonBuilder().create().fromJson(response.toString(), MenuResult::class.java)
                 var item = menuResult.data.firstOrNull { it.name == getCategoryTitle(selectedItem) }
                 loadList(item?.items)
+                setContentView(binding.root)
             },
             { error ->
                 error.message?.let {
@@ -78,13 +82,19 @@ class CategoryActivity : AppCompatActivity() {
         dishList?.let {
             val adapter = CategoryAdapter(it) { dish ->
                 Log.d("dish", "selected dish ${dish.name}")
+                startDishDetailActivity(dish)
             }
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
             binding.recyclerView.adapter = adapter
         }
-
-
     }
+
+    private fun startDishDetailActivity(dish: Dish) {
+        val intent = Intent(this, DishDetailActivity::class.java)
+        intent.putExtra("dishName", dish.name)
+        startActivity(intent)
+    }
+
     private fun getCategoryTitle( item: ItemType?): String {
         return when(item) {
             ItemType.ENTREES -> getString(R.string.app_entree)

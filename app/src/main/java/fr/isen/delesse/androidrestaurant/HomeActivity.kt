@@ -19,15 +19,12 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.cardViewEntree.setOnClickListener {
-            Toast.makeText(this, getString(R.string.toast_entrees), Toast.LENGTH_SHORT).show()
             startCategoryActivity(CategoryActivity.ItemType.ENTREES)
         }
         binding.cardViewPlat.setOnClickListener {
-            Toast.makeText(this, getString(R.string.toast_plats), Toast.LENGTH_SHORT).show()
             startCategoryActivity(CategoryActivity.ItemType.PLATS)
         }
         binding.cardViewDessert.setOnClickListener {
-            Toast.makeText(this, getString(R.string.toast_desserts), Toast.LENGTH_SHORT).show()
             startCategoryActivity(CategoryActivity.ItemType.DESSERTS)
         }
     }
