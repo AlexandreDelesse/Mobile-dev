@@ -1,9 +1,13 @@
-package fr.isen.delesse.androidrestaurant
+package fr.isen.delesse.androidrestaurant.DishDetail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.squareup.picasso.Picasso
-import fr.isen.delesse.androidrestaurant.databinding.ActivityCategoryBinding
+import fr.isen.delesse.androidrestaurant.Cart.CartItem
+import fr.isen.delesse.androidrestaurant.R
 import fr.isen.delesse.androidrestaurant.databinding.ActivityDishDetailBinding
 import fr.isen.delesse.androidrestaurant.network.Dish
 
@@ -33,27 +37,37 @@ class DishDetailActivity : AppCompatActivity() {
             binding.dishDetailIngredient.append(", ")
         }
         binding.dishDetailPrice.text = "${dishDetails.prices.first().price}. €"
-        if (dishDetails.images.isNotEmpty()){
+        /*if (dishDetails.images.isNotEmpty()){
             url = dishDetails.images.first()
         }
-        Picasso.get().load(url).placeholder(R.drawable.icondessert).into(binding.dishDetailImage)
+        Picasso.get().load(url).placeholder(R.drawable.icondessert).into(binding.dishDetailImage)*/
+        binding.viewPager.adapter = DishDetailAdapter(this, dishDetails.images)
     }
 
     private fun addOne(dish: Dish) {
         this.countValue++
         binding.countTextView.text = countValue.toString()
-        binding.totalButton.text = "${countAndShowTotal(dish).toString()} €"
+        binding.totalButton.text = "TOTAL : ${countAndShowTotal(dish).toString()} €"
     }
 
     private fun removeOne(dish: Dish) {
         if(this.countValue > 0) {
             this.countValue--
             binding.countTextView.text = countValue.toString()
-            binding.totalButton.text = "${countAndShowTotal(dish).toString()} €"
+            binding.totalButton.text = "TOTAL : ${countAndShowTotal(dish).toString()} €"
         }
     }
     private fun countAndShowTotal(dish: Dish): Float {
-
+        addToCart(dish, countValue)
         return dish.prices.first().price.toFloat() * this.countValue.toFloat()
+
+    }
+    private fun addToCart(dish: Dish, count: Int) {
+        // recuperer cart fichier
+        // s'il existe pas, le créer
+        // le mettre a jour
+        val item = CartItem(dish, count)
+        val json = GsonBuilder().create().toJson(item)
+        Log.d("cart", json)
     }
 }

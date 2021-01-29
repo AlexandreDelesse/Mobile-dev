@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidRestaurant"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DishDetailActivity"></activity>
+        <activity android:name=".DishDetail.DishDetailActivity"></activity>
         <activity android:name=".category.CategoryActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>

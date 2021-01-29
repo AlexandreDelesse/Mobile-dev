@@ -19,4 +19,6 @@
     <string name="toast_entrees">Entrées ...</string>
     <string name="toast_plats">Plats ...</string>
     <string name="toast_desserts">Desserts ...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
