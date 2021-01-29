@@ -41,12 +41,11 @@ class CategoryAdapter (private val entries: List<Dish>,
         fun bind(dish: Dish) {
             titleView.text = dish.name
             priceView.text = "${dish.prices.first().price} €"
-            //Picasso.with(imageView.context).load(dish.images.firstOrNull()).placeholder(R.drawable.icondessert).resize(70,70).into(imageView)
             var url: String? = null
             if(dish.images.isNotEmpty() && dish.images[0].isNotEmpty()) {
                 url = dish.images[0]
             }
-            Picasso.get().load(url).placeholder(R.drawable.icondessert).into(imageView)
+            Picasso.get().load(url).placeholder(R.drawable.icondessert).resize(70, 70).into(imageView)
         }
     }
 }

@@ -1,5 +1,6 @@
 package fr.isen.delesse.androidrestaurant.category
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -55,27 +56,51 @@ class CategoryActivity : AppCompatActivity() {
     }
 
     private fun makeRequest(selectedItem: ItemType?) {
-        val queue = Volley.newRequestQueue(this)
-        val url = NetworkConstant.BASE_URL + NetworkConstant.PATH_MENU
-        val jsonData = JSONObject()
-        jsonData.put(NetworkConstant.ID_SHOP,1)
-        val jsonObjectRequest = JsonObjectRequest(Request.Method.POST,
-            url,
-            jsonData,
-            { response ->
-                val menuResult = GsonBuilder().create().fromJson(response.toString(), MenuResult::class.java)
-                var item = menuResult.data.firstOrNull { it.name == getCategoryTitle(selectedItem) }
-                loadList(item?.items)
-                setContentView(binding.root)
-            },
-            { error ->
-                error.message?.let {
-                    Log.d("request error : ", it)
-                } ?: run {
-                    Log.d("request : ", error.toString())
-                }
-            })
-        queue.add(jsonObjectRequest)
+        resultFromCache()?.let {
+            //la requete est en cache
+            parseResult(it, selectedItem)
+            setContentView(binding.root)
+        } ?: run {
+            val queue = Volley.newRequestQueue(this)
+            val url = NetworkConstant.BASE_URL + NetworkConstant.PATH_MENU
+            val jsonData = JSONObject()
+            jsonData.put(NetworkConstant.ID_SHOP,1)
+            val jsonObjectRequest = JsonObjectRequest(Request.Method.POST,
+                url,
+                jsonData,
+                { response ->
+                    cacheResult(response.toString())
+                    parseResult(response.toString(), selectedItem)
+                    setContentView(binding.root)
+                },
+                { error ->
+                    error.message?.let {
+                        Log.d("request error : ", it)
+                    } ?: run {
+                        Log.d("request : ", error.toString())
+                    }
+                })
+            queue.add(jsonObjectRequest)
+        }
+
+    }
+
+    private fun cacheResult(response: String) {
+        val sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(REQUEST_CACHE, response)
+        editor.apply()
+    }
+
+    private fun resultFromCache(): String? {
+        val sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getString(REQUEST_CACHE, null)
+    }
+
+    private fun parseResult(response: String, selectedItem: ItemType?) {
+        val menuResult = GsonBuilder().create().fromJson(response.toString(), MenuResult::class.java)
+        var item = menuResult.data.firstOrNull { it.name == getCategoryTitle(selectedItem) }
+        loadList(item?.items)
     }
 
     private fun loadList(dishList: List<Dish>?) {
@@ -92,6 +117,9 @@ class CategoryActivity : AppCompatActivity() {
     private fun startDishDetailActivity(dish: Dish) {
         val intent = Intent(this, DishDetailActivity::class.java)
         intent.putExtra("dishName", dish.name)
+        intent.putExtra("dishImage", dish.images[0])
+        intent.putExtra("dishIngredient", dish.ingredients.first().name)
+        intent.putExtra("dishPrice", dish.prices.first().price)
         startActivity(intent)
     }
 
@@ -107,5 +135,10 @@ class CategoryActivity : AppCompatActivity() {
     override fun onDestroy() {
         Log.d("CategoryActivity", "end of CategoryActivity")
         super.onDestroy()
+    }
+
+    companion object  {
+        const val USER_PREFERENCES_NAME = "USER_PREFERENCES_NAME"
+        const val REQUEST_CACHE = "REQUEST_CACHE"
     }
 }

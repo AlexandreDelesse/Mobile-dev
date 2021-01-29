@@ -6,6 +6,10 @@
     <string name="app_plat">Plats</string>
     <string name="app_dessert">Desserts</string>
     <string name="loading_text">Chargement...</string>
+    <string name="less_text">-</string>
+    <string name="plus_text">+</string>
+    <string name="count_textView">0</string>
+    <string name="total_button_text">total...</string>
     <!-- images  -->
     <string name="img_descripton_mcdroid">image d\'android</string>
     <string name="img_descripton_entrees">image d\'entree</string>

@@ -6,13 +6,87 @@
     android:layout_height="match_parent"
     tools:context=".DishDetailActivity">
 
+    <ImageView
+        android:id="@+id/dishDetailImage"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
     <TextView
         android:id="@+id/dishDetailName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="category detail works"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dishDetailImage" />
+
+    <TextView
+        android:id="@+id/dishDetailIngredient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/dishDetailName"
+        app:layout_constraintTop_toBottomOf="@+id/dishDetailName" />
+
+    <TextView
+        android:id="@+id/dishDetailPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/dishDetailIngredient"
+        app:layout_constraintTop_toBottomOf="@+id/dishDetailIngredient" />
+
+    <Button
+        android:id="@+id/plusButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/button_shape"
+        android:padding="0dp"
+        android:text="@string/plus_text"
+        app:layout_constraintBottom_toBottomOf="@+id/countTextView"
+        app:layout_constraintStart_toEndOf="@+id/countTextView"
+        app:layout_constraintTop_toTopOf="@+id/countTextView" />
+
+    <Button
+        android:id="@+id/lessButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/button_shape"
+        android:padding="0dp"
+        android:text="@string/less_text"
+        app:layout_constraintBottom_toBottomOf="@+id/countTextView"
+        app:layout_constraintEnd_toStartOf="@+id/countTextView"
+        app:layout_constraintTop_toTopOf="@+id/countTextView" />
+
+    <TextView
+        android:id="@+id/countTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/count_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/dishDetailPrice" />
+
+    <Button
+        android:id="@+id/totalButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:text="@string/total_button_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
