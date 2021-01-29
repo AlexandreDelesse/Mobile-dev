@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import fr.isen.delesse.androidrestaurant.R
 import fr.isen.delesse.androidrestaurant.databinding.ItemCellBinding
 import fr.isen.delesse.androidrestaurant.network.Dish
 import kotlin.coroutines.coroutineContext
@@ -40,7 +41,12 @@ class CategoryAdapter (private val entries: List<Dish>,
         fun bind(dish: Dish) {
             titleView.text = dish.name
             priceView.text = "${dish.prices.first().price} €"
-            Picasso.with(imageView.context).load(dish.images[0]).resize(70,70).into(imageView)
+            //Picasso.with(imageView.context).load(dish.images.firstOrNull()).placeholder(R.drawable.icondessert).resize(70,70).into(imageView)
+            var url: String? = null
+            if(dish.images.isNotEmpty() && dish.images[0].isNotEmpty()) {
+                url = dish.images[0]
+            }
+            Picasso.get().load(url).placeholder(R.drawable.icondessert).into(imageView)
         }
     }
 }
