@@ -44,15 +44,19 @@ class CategoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("CategoryActivity", "start of CategoryActivity")
-        binding = ActivityCategoryBinding.inflate(layoutInflater)
-        setContentView(R.layout.loading_page)
 
+        binding = ActivityCategoryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val selectedItem = intent.getSerializableExtra(HomeActivity.CATEGORY_NAME) as? ItemType
+
+        binding.swipeRefresh.setOnRefreshListener {
+            resetCache()
+            makeRequest(selectedItem)
+        }
         binding.categoryTitle.text = getCategoryTitle(selectedItem)
 
         makeRequest(selectedItem)
-
     }
 
     private fun makeRequest(selectedItem: ItemType?) {
@@ -69,11 +73,13 @@ class CategoryActivity : AppCompatActivity() {
                 url,
                 jsonData,
                 { response ->
+                    binding.swipeRefresh.isRefreshing = false
                     cacheResult(response.toString())
                     parseResult(response.toString(), selectedItem)
                     setContentView(binding.root)
                 },
                 { error ->
+                    binding.swipeRefresh.isRefreshing = false
                     error.message?.let {
                         Log.d("request error : ", it)
                     } ?: run {
@@ -89,6 +95,13 @@ class CategoryActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString(REQUEST_CACHE, response)
+        editor.apply()
+    }
+
+    private fun resetCache() {
+        val sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.remove(REQUEST_CACHE)
         editor.apply()
     }
 
@@ -116,10 +129,7 @@ class CategoryActivity : AppCompatActivity() {
 
     private fun startDishDetailActivity(dish: Dish) {
         val intent = Intent(this, DishDetailActivity::class.java)
-        intent.putExtra("dishName", dish.name)
-        intent.putExtra("dishImage", dish.images[0])
-        intent.putExtra("dishIngredient", dish.ingredients.first().name)
-        intent.putExtra("dishPrice", dish.prices.first().price)
+        intent.putExtra("dish", dish)
         startActivity(intent)
     }
 

@@ -32,7 +32,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/dishDetailName"
         app:layout_constraintTop_toBottomOf="@+id/dishDetailName" />
 
