@@ -12,6 +12,7 @@
     <string name="total_button_text">total...</string>
     <string name="cart_Validation">votre plat a ete ajouté au panier !</string>
     <string name="cart">Cart</string>
+    <string name="cart_quantity">Quantity: </string>
     <!-- images  -->
     <string name="img_descripton_mcdroid">image d\'android</string>
     <string name="img_descripton_entrees">image d\'entree</string>

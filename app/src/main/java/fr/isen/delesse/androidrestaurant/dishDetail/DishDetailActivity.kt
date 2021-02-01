@@ -1,19 +1,13 @@
-package fr.isen.delesse.androidrestaurant.DishDetail
+package fr.isen.delesse.androidrestaurant.dishDetail
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.squareup.picasso.Picasso
 import fr.isen.delesse.androidrestaurant.BaseActivity
-import fr.isen.delesse.androidrestaurant.Cart.Cart
-import fr.isen.delesse.androidrestaurant.Cart.CartItem
+import fr.isen.delesse.androidrestaurant.cart.Cart
+import fr.isen.delesse.androidrestaurant.cart.CartItem
 import fr.isen.delesse.androidrestaurant.R
-import fr.isen.delesse.androidrestaurant.category.CategoryActivity
 import fr.isen.delesse.androidrestaurant.databinding.ActivityDishDetailBinding
 import fr.isen.delesse.androidrestaurant.network.Dish
 
@@ -23,8 +17,7 @@ class DishDetailActivity : BaseActivity() {
 
     companion object {
         const val DISH_EXTRA = "DISH_EXTRA"
-        const val ITEMS_COUNT = "ITEMS_COUNT"
-        const val USER_PREFERENCES_NAME = "USER_PREFERENCES_NAME"
+
     }
 
 
@@ -75,6 +68,7 @@ class DishDetailActivity : BaseActivity() {
     }
 
     private fun removeOne(dish: Dish) {
+        //countValue = max(1, countValue -1)
         if(this.countValue > 0) {
             this.countValue--
             binding.countTextView.text = countValue.toString()
@@ -93,27 +87,14 @@ class DishDetailActivity : BaseActivity() {
         // le mettre a jour
         cart.addItem(CartItem(dish, count))
         cart.save(this)
-        val json = GsonBuilder().create().toJson(cart)
-        refreshMenu(cart)
+        //val json = GsonBuilder().create().toJson(cart)
+        refreshMenu()
         Snackbar.make(binding.root, getString(R.string.cart_Validation), Snackbar.LENGTH_SHORT).show()
 
     }
 
-    private fun afficheAlert() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(getString(R.string.cart_Validation))
-        builder.setPositiveButton("ok") { dioalog, which ->
 
-        }
-        builder.show()
-    }
-
-    private fun refreshMenu(cart: Cart) {
-        val count = cart.itemCount
-        val sharedPreferences = getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putInt(ITEMS_COUNT, count)
-        editor.apply()
+    private fun refreshMenu() {
         invalidateOptionsMenu()
     }
 }

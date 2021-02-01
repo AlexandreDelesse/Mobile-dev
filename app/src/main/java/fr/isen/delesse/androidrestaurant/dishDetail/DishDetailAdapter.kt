@@ -1,4 +1,4 @@
-package fr.isen.delesse.androidrestaurant.DishDetail
+package fr.isen.delesse.androidrestaurant.dishDetail
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment

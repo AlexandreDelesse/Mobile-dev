@@ -1,4 +1,4 @@
-package fr.isen.delesse.androidrestaurant.Cart
+package fr.isen.delesse.androidrestaurant.cart
 
 import android.content.Context
 import com.google.gson.GsonBuilder
@@ -10,9 +10,13 @@ class Cart(val items: MutableList<CartItem>): Serializable {
     //val jsonFile = File(context.cacheDir.absolutePath + CART_FILE)
     var itemCount : Int = 0
     get() {
-        return items
+        return if(items.count() > 0){
+            items
                 .map { it.count }
                 .reduce { acc, i -> acc + i }
+        } else {
+            0
+        }
     }
 
     fun addItem(item: CartItem) {
@@ -29,6 +33,15 @@ class Cart(val items: MutableList<CartItem>): Serializable {
     fun save(context: Context) {
         val jsonFile = File(context.cacheDir.absolutePath + CART_FILE)
         jsonFile.writeText(GsonBuilder().create().toJson(this))
+        updateCount(context)
+    }
+
+    fun updateCount(context: Context){
+        val count = itemCount
+        val sharedPreferences = context.getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putInt(ITEMS_COUNT, count)
+        editor.apply()
     }
 
     companion object {
@@ -43,6 +56,8 @@ class Cart(val items: MutableList<CartItem>): Serializable {
 
         }
         const val CART_FILE = "cart.json"
+        const val ITEMS_COUNT = "ITEMS_COUNT"
+        const val USER_PREFERENCES_NAME = "USER_PREFERENCES_NAME"
     }
 }
 

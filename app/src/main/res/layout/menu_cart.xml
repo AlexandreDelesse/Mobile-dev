@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/cartMenuIc"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,10 +20,11 @@
         android:id="@+id/cartMenuText"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:background="@drawable/button_shape"
         android:text="TextView"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cartMenuIc"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package fr.isen.delesse.androidrestaurant.category
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
 import fr.isen.delesse.androidrestaurant.BaseActivity
-import fr.isen.delesse.androidrestaurant.DishDetail.DishDetailActivity
+import fr.isen.delesse.androidrestaurant.dishDetail.DishDetailActivity
 import fr.isen.delesse.androidrestaurant.HomeActivity
 import fr.isen.delesse.androidrestaurant.R
 import fr.isen.delesse.androidrestaurant.databinding.ActivityCategoryBinding
