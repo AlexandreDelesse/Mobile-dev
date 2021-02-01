@@ -1,25 +1,22 @@
 package fr.isen.delesse.androidrestaurant.dishDetail
 
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import fr.isen.delesse.androidrestaurant.BaseActivity
+import fr.isen.delesse.androidrestaurant.R
 import fr.isen.delesse.androidrestaurant.cart.Cart
 import fr.isen.delesse.androidrestaurant.cart.CartItem
-import fr.isen.delesse.androidrestaurant.R
 import fr.isen.delesse.androidrestaurant.databinding.ActivityDishDetailBinding
 import fr.isen.delesse.androidrestaurant.network.Dish
 
 class DishDetailActivity : BaseActivity() {
     private lateinit var binding : ActivityDishDetailBinding
-    private var countValue = 0
+    private var countValue = 1
 
     companion object {
         const val DISH_EXTRA = "DISH_EXTRA"
-
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +25,7 @@ class DishDetailActivity : BaseActivity() {
         //setContentView(R.layout.activity_dish_detail)
 
         val dishDetails = intent.getSerializableExtra(DISH_EXTRA) as Dish
-        var url: String? = null
+        refreshTotal(dishDetails)
 
         binding.plusButton.setOnClickListener{
             addOne(dishDetails)
@@ -36,17 +33,12 @@ class DishDetailActivity : BaseActivity() {
         binding.lessButton.setOnClickListener {
             removeOne(dishDetails)
         }
-
         binding.dishDetailName.text = dishDetails.name
         dishDetails.ingredients.forEach {
             binding.dishDetailIngredient.append(it.name)
             binding.dishDetailIngredient.append(", ")
         }
         binding.dishDetailPrice.text = "${dishDetails.prices.first().price}. €"
-        /*if (dishDetails.images.isNotEmpty()){
-            url = dishDetails.images.first()
-        }
-        Picasso.get().load(url).placeholder(R.drawable.icondessert).into(binding.dishDetailImage)*/
         binding.viewPager.adapter = DishDetailAdapter(this, dishDetails.images)
         binding.totalButton.setOnClickListener {
             var cart = Cart.getCart(this)
@@ -63,21 +55,21 @@ class DishDetailActivity : BaseActivity() {
 
     private fun addOne(dish: Dish) {
         this.countValue++
-        binding.countTextView.text = countValue.toString()
-        binding.totalButton.text = "TOTAL : ${countAndShowTotal(dish).toString()} €"
+        refreshTotal(dish)
     }
 
     private fun removeOne(dish: Dish) {
         //countValue = max(1, countValue -1)
-        if(this.countValue > 0) {
+        if(this.countValue > 1) {
             this.countValue--
-            binding.countTextView.text = countValue.toString()
-            binding.totalButton.text = "TOTAL : ${countAndShowTotal(dish).toString()} €"
         }
+        refreshTotal(dish)
     }
 
-    private fun countAndShowTotal(dish: Dish): Float {
-        return dish.prices.first().price.toFloat() * this.countValue.toFloat()
+    private fun refreshTotal(dish: Dish) {
+        var result = dish.prices.first().price.toFloat() * this.countValue.toFloat()
+        binding.countTextView.text = countValue.toString()
+        binding.totalButton.text = "TOTAL : ${result.toString()} €"
     }
 
     private fun addToCart(dish: Dish, count: Int) {
@@ -87,14 +79,14 @@ class DishDetailActivity : BaseActivity() {
         // le mettre a jour
         cart.addItem(CartItem(dish, count))
         cart.save(this)
-        //val json = GsonBuilder().create().toJson(cart)
-        refreshMenu()
+        val json = GsonBuilder().create().toJson(cart)
+        refreshMenu(cart)
         Snackbar.make(binding.root, getString(R.string.cart_Validation), Snackbar.LENGTH_SHORT).show()
 
     }
 
 
-    private fun refreshMenu() {
+    private fun refreshMenu(cart: Cart) {
         invalidateOptionsMenu()
     }
 }

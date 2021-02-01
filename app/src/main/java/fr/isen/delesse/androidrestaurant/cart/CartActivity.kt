@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import fr.isen.delesse.androidrestaurant.dishDetail.DishDetailActivity
 import fr.isen.delesse.androidrestaurant.databinding.ActivityCartBinding
+import fr.isen.delesse.androidrestaurant.login.LoginActivity
 import fr.isen.delesse.androidrestaurant.network.Dish
 
 
@@ -20,13 +21,18 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
 
         var cart = Cart.getCart(this)
         setContentView(binding.root)
-
         reloadData(cart)
+
+        binding.cartOrderButton.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun reloadData(cart: Cart){
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = CartAdapter(cart, this, this)
+        displayTotalCartDetails(cart)
     }
 
 
@@ -44,6 +50,15 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
         cart.items.remove(itemToDelete)
         cart.save(this)
         reloadData(cart)
+    }
+
+    private fun displayTotalCartDetails(cart: Cart){
+        var totalOrder: Int = 0
+        cart.items.forEach{
+            totalOrder += it.count * it.dish.prices.first().price.toInt()
+        }
+        binding.cartQuantity.text = "${cart.itemCount} arcticles"
+        binding.cartTotal.text =  "${totalOrder} €"
     }
 
     override fun onShowDetail(item: CartItem) {
