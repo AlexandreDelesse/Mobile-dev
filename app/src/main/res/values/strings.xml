@@ -10,6 +10,8 @@
     <string name="plus_text">+</string>
     <string name="count_textView">0</string>
     <string name="total_button_text">total...</string>
+    <string name="cart_Validation">votre plat a ete ajouté au panier !</string>
+    <string name="cart">Cart</string>
     <!-- images  -->
     <string name="img_descripton_mcdroid">image d\'android</string>
     <string name="img_descripton_entrees">image d\'entree</string>

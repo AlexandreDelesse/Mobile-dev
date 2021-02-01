@@ -10,6 +10,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
+import fr.isen.delesse.androidrestaurant.BaseActivity
 import fr.isen.delesse.androidrestaurant.DishDetail.DishDetailActivity
 import fr.isen.delesse.androidrestaurant.HomeActivity
 import fr.isen.delesse.androidrestaurant.R
@@ -19,7 +20,7 @@ import fr.isen.delesse.androidrestaurant.network.MenuResult
 import fr.isen.delesse.androidrestaurant.network.NetworkConstant
 import org.json.JSONObject
 
-class CategoryActivity : AppCompatActivity() {
+class CategoryActivity : BaseActivity() {
 
     enum class ItemType {
         ENTREES, PLATS, DESSERTS;
@@ -38,10 +39,7 @@ class CategoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("CategoryActivity", "start of CategoryActivity")
-
         binding = ActivityCategoryBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         val selectedItem = intent.getSerializableExtra(HomeActivity.CATEGORY_NAME) as? ItemType
 
@@ -114,7 +112,6 @@ class CategoryActivity : AppCompatActivity() {
     private fun loadList(dishList: List<Dish>?) {
         dishList?.let {
             val adapter = CategoryAdapter(it) { dish ->
-                Log.d("dish", "selected dish ${dish.name}")
                 startDishDetailActivity(dish)
             }
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -124,7 +121,7 @@ class CategoryActivity : AppCompatActivity() {
 
     private fun startDishDetailActivity(dish: Dish) {
         val intent = Intent(this, DishDetailActivity::class.java)
-        intent.putExtra("dish", dish)
+        intent.putExtra(DishDetailActivity.DISH_EXTRA, dish)
         startActivity(intent)
     }
 

@@ -16,8 +16,14 @@ import kotlin.coroutines.coroutineContext
 class CategoryAdapter (private val entries: List<Dish>,
                         private val entryClickListener: (Dish) -> Unit)
     : RecyclerView.Adapter<CategoryAdapter.ItemViewHolder>() {
-    override fun onCreateViewHolder( parent: ViewGroup, viewType: Int ): ItemViewHolder {
-        return ItemViewHolder(ItemCellBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ItemViewHolder {
+        return ItemViewHolder(
+            ItemCellBinding
+                .inflate(LayoutInflater
+                    .from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -32,7 +38,8 @@ class CategoryAdapter (private val entries: List<Dish>,
         return entries.count()
     }
 
-    class ItemViewHolder(itemsBinding: ItemCellBinding): RecyclerView.ViewHolder(itemsBinding.root) {
+    class ItemViewHolder(itemsBinding: ItemCellBinding)
+        : RecyclerView.ViewHolder(itemsBinding.root) {
         val titleView: TextView = itemsBinding.itemTitle
         val priceView: TextView = itemsBinding.itemPrice
         val imageView: ImageView = itemsBinding.itemImageView

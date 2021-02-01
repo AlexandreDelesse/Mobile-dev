@@ -7,7 +7,7 @@ import android.util.Log
 import fr.isen.delesse.androidrestaurant.category.CategoryActivity
 import fr.isen.delesse.androidrestaurant.databinding.ActivityHomeBinding
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
