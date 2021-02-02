@@ -1,18 +1,24 @@
 package fr.isen.delesse.androidrestaurant.cart
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import fr.isen.delesse.androidrestaurant.dishDetail.DishDetailActivity
 import fr.isen.delesse.androidrestaurant.databinding.ActivityCartBinding
-import fr.isen.delesse.androidrestaurant.login.LoginActivity
+import fr.isen.delesse.androidrestaurant.login.RegisterActivity
 import fr.isen.delesse.androidrestaurant.network.Dish
-
 
 
 class CartActivity : AppCompatActivity(), CartCellInterface {
     private lateinit var binding: ActivityCartBinding
+
+    companion object {
+        const val REQUEST_CODE = 100
+    }
     //TODO late init for get basket
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,8 +30,8 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
         reloadData(cart)
 
         binding.cartOrderButton.setOnClickListener{
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE)
         }
     }
 
@@ -63,5 +69,23 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
 
     override fun onShowDetail(item: CartItem) {
         TODO("Not yet implemented")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQUEST_CODE){
+            val sharedPreferences = getSharedPreferences(RegisterActivity.USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            val idUser = sharedPreferences.getInt(RegisterActivity.ID_USER, -1)
+            if(idUser != -1){
+                sendOrder(idUser)
+            }
+        }
+    }
+
+    private fun sendOrder (idUser: Int){
+
+    }
+    private fun parseCart(cart: Cart){
+
     }
 }

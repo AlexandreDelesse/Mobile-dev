@@ -13,6 +13,8 @@
         android:theme="@style/Theme.AndroidRestaurant"
         android:usesCleartextTraffic="true">
         <activity android:name=".login.LoginActivity"></activity>
+        <activity android:name=".LoaderActivity" />
+        <activity android:name=".login.RegisterActivity" />
         <activity android:name=".cart.CartActivity" />
         <activity android:name=".dishDetail.DishDetailActivity" />
         <activity android:name=".category.CategoryActivity" />

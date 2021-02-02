@@ -10,11 +10,12 @@
     <string name="cart">Cart</string>
     <string name="cart_quantity">Quantity: </string>
     <string name="cart_order">Commander </string>
+    <string name="login_register">Register </string>
     <string name="login_login">Login </string>
     <string name="login_title">Veuillez vous conecter !</string>
     <!-- Placeholder formulaire -->
-    <string name="placeholder_name">Nom</string>
-    <string name="placeholder_firstname">Prénom</string>
+    <string name="placeholder_firstname">Nom</string>
+    <string name="placeholder_lastname">Prénom</string>
     <string name="placeholder_address">Adresse</string>
     <string name="placeholder_email">Email</string>
     <string name="placeholder_password">Password</string>
