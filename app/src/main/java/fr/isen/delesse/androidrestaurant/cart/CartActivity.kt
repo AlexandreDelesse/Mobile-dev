@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
@@ -11,6 +12,7 @@ import fr.isen.delesse.androidrestaurant.dishDetail.DishDetailActivity
 import fr.isen.delesse.androidrestaurant.databinding.ActivityCartBinding
 import fr.isen.delesse.androidrestaurant.login.RegisterActivity
 import fr.isen.delesse.androidrestaurant.network.Dish
+import org.json.JSONObject
 
 
 class CartActivity : AppCompatActivity(), CartCellInterface {
@@ -28,11 +30,13 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
         var cart = Cart.getCart(this)
         setContentView(binding.root)
         reloadData(cart)
+        parseCart(cart)
 
         binding.cartOrderButton.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)
             startActivityForResult(intent, REQUEST_CODE)
         }
+
     }
 
     private fun reloadData(cart: Cart){
@@ -86,6 +90,10 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
 
     }
     private fun parseCart(cart: Cart){
-
+        val jsonCart = JSONObject()
+        cart.items.forEach{
+            jsonCart.put( it.dish.name, it.count)
+        }
+        Log.d("parsedCart", jsonCart.toString())
     }
 }
