@@ -43,12 +43,13 @@ class LoginActivity : AppCompatActivity() {
         jsonData.put(NetworkConstant.ID_SHOP,1)
         jsonData.put(NetworkConstant.USER_EMAIL, binding.userLogin.text)
         jsonData.put(NetworkConstant.USER_PASSWORD, binding.userPassword.text)
-        Log.d("Data", jsonData.toString())
+        Log.d("Data login", jsonData.toString())
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.POST,
             url,
             jsonData,
             { response ->
+                Log.d("response login", response.toString())
                 val userResult = GsonBuilder().create().fromJson(response.toString(), RegisterResult::class.java)
                 saveUser(userResult.data)
             },
@@ -56,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
                 error.message?.let {
                     Log.d("request error : ", it)
                 } ?: run {
-                    Log.d("request : ", String(error.networkResponse.data))
+                    Log.d("request login : ", String(error.networkResponse.data))
                 }
             })
         queue.add(jsonObjectRequest)

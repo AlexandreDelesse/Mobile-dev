@@ -45,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun testLoginForm(): Boolean{
          return (binding.loginFisrtname.text.isNotEmpty() &&
             binding.loginLastname.text.isNotEmpty() &&
-            binding.loginAddress.text.isNotEmpty() &&
+
             binding.loginEmail.text.isNotEmpty() &&
             binding.loginPassword.text.length >= 6)
     }
@@ -73,7 +73,7 @@ class RegisterActivity : AppCompatActivity() {
                 error.message?.let {
                     Log.d("request error : ", it)
                 } ?: run {
-                    Log.d("request : ", String(error.networkResponse.data))
+                    Log.d("request register : ", String(error.networkResponse.data))
                 }
             })
         queue.add(jsonObjectRequest)
@@ -91,7 +91,7 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == CartActivity.REQUEST_CODE){
+        if(requestCode == CartActivity.REQUEST_CODE && resultCode == Activity.RESULT_FIRST_USER){
             setResult(Activity.RESULT_FIRST_USER)
             finish()
         }
