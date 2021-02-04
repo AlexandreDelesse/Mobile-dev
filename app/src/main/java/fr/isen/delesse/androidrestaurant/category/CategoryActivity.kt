@@ -103,7 +103,7 @@ class CategoryActivity : BaseActivity() {
     }
 
     private fun parseResult(response: String, selectedItem: ItemType?) {
-        val menuResult = GsonBuilder().create().fromJson(response.toString(), MenuResult::class.java)
+        val menuResult = GsonBuilder().create().fromJson(response, MenuResult::class.java)
         var item = menuResult.data.firstOrNull { it.name == getCategoryTitle(selectedItem) }
         loadList(item?.items)
     }

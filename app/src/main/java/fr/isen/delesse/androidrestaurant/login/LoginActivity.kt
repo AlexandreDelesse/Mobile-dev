@@ -9,10 +9,10 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import fr.isen.delesse.androidrestaurant.databinding.ActivityLoginBinding
 import fr.isen.delesse.androidrestaurant.network.NetworkConstant
-import fr.isen.delesse.androidrestaurant.network.RegisterResult
-import fr.isen.delesse.androidrestaurant.network.User
+import fr.isen.delesse.androidrestaurant.user.User
 import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
@@ -50,8 +50,11 @@ class LoginActivity : AppCompatActivity() {
             jsonData,
             { response ->
                 Log.d("response login", response.toString())
-                val userResult = GsonBuilder().create().fromJson(response.toString(), RegisterResult::class.java)
-                saveUser(userResult.data)
+                val userId = getUserIdFromResponse(response)
+                User().saveUser(userId, this)
+                setResult(Activity.RESULT_FIRST_USER)
+                finish()
+
             },
             { error ->
                 error.message?.let {
@@ -62,18 +65,14 @@ class LoginActivity : AppCompatActivity() {
             })
         queue.add(jsonObjectRequest)
     }
-
-    fun saveUser(user: User) {
-        val sharedPreferences = getSharedPreferences(RegisterActivity.USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putInt(RegisterActivity.ID_USER, user.id)
-        editor.apply()
-
-        setResult(Activity.RESULT_FIRST_USER)
-        finish()
+    fun getUserIdFromResponse(response: JSONObject): Int{
+        return response.getJSONObject(RESPONSE_DATA).getInt(RESPONSE_DATA_ID)
     }
+
 
     companion object {
         const val REQUEST_CODE = -1
+        const val RESPONSE_DATA = "data"
+        const val RESPONSE_DATA_ID = "id"
     }
 }

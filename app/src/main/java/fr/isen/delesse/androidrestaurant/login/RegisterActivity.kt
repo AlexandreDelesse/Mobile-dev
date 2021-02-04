@@ -6,7 +6,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.contentcapture.ContentCaptureSession
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
@@ -17,8 +16,6 @@ import fr.isen.delesse.androidrestaurant.cart.CartActivity
 
 import fr.isen.delesse.androidrestaurant.databinding.ActivityRegisterBinding
 import fr.isen.delesse.androidrestaurant.network.NetworkConstant
-import fr.isen.delesse.androidrestaurant.network.RegisterResult
-import fr.isen.delesse.androidrestaurant.network.User
 import org.json.JSONObject
 
 class RegisterActivity : AppCompatActivity() {
@@ -66,8 +63,8 @@ class RegisterActivity : AppCompatActivity() {
             url,
             jsonData,
             { response ->
-                val userResult = GsonBuilder().create().fromJson(response.toString(), RegisterResult::class.java)
-                saveUser(userResult.data)
+                setResult(Activity.RESULT_FIRST_USER)
+                finish()
             },
             { error ->
                 error.message?.let {
@@ -77,16 +74,6 @@ class RegisterActivity : AppCompatActivity() {
                 }
             })
         queue.add(jsonObjectRequest)
-    }
-
-    fun saveUser(user: User) {
-        val sharedPreferences = getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putInt(ID_USER, user.id)
-        editor.apply()
-
-        setResult(Activity.RESULT_FIRST_USER)
-        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

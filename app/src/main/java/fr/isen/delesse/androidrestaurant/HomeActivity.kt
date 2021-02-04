@@ -35,6 +35,7 @@ class HomeActivity : BaseActivity() {
     }
     companion object {
         const val CATEGORY_NAME = "CATEGORY_NAME"
+        const val USER = "USER"
     }
 
     override fun onDestroy() {

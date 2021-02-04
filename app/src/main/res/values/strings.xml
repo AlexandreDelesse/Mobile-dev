@@ -6,10 +6,12 @@
     <string name="app_plat">Plats</string>
     <string name="app_dessert">Desserts</string>
     <string name="loading_text">Chargement...</string>
+    <!-- cart string -->
     <string name="cart_Validation">votre plat a ete ajouté au panier !</string>
     <string name="cart">Cart</string>
     <string name="cart_quantity">Quantity: </string>
     <string name="cart_order">Commander </string>
+    <!-- Login string -->
     <string name="login_register">Register </string>
     <string name="login_login">Login </string>
     <string name="login_title">Veuillez vous conecter !</string>
@@ -19,6 +21,8 @@
     <string name="placeholder_address">Adresse</string>
     <string name="placeholder_email">Email</string>
     <string name="placeholder_password">Password</string>
+    <!-- order string -->
+    <string name="order_title">Vos commandes</string>
 
     <!-- images  -->
     <string name="img_descripton_mcdroid">image d\'android</string>

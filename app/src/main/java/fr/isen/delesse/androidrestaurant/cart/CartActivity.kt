@@ -12,15 +12,13 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import fr.isen.delesse.androidrestaurant.dishDetail.DishDetailActivity
 import fr.isen.delesse.androidrestaurant.databinding.ActivityCartBinding
 import fr.isen.delesse.androidrestaurant.login.RegisterActivity
 import fr.isen.delesse.androidrestaurant.network.Dish
 import fr.isen.delesse.androidrestaurant.network.NetworkConstant
-import fr.isen.delesse.androidrestaurant.network.RegisterResult
-import org.json.JSONArray
+import fr.isen.delesse.androidrestaurant.order.OrderActivity
+import fr.isen.delesse.androidrestaurant.user.User
 import org.json.JSONObject
 
 
@@ -42,8 +40,12 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
         parseCart(cart, 1)
 
         binding.cartOrderButton.setOnClickListener{
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivityForResult(intent, REQUEST_CODE)
+            if(User().isConnected(this)){
+                sendOrder(User().getUserId(this))
+            } else {
+                val intent = Intent(this, RegisterActivity::class.java)
+                startActivityForResult(intent, REQUEST_CODE)
+            }
         }
     }
 
@@ -69,9 +71,9 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
     }
 
     private fun displayTotalCartDetails(cart: Cart){
-        var totalOrder: Int = 0
+        var totalOrder: Float = 0F
         cart.items.forEach{
-            totalOrder += it.count * it.dish.prices.first().price.toInt()
+            totalOrder = it.count * it.dish.prices.first().price.toFloat()
         }
         binding.cartQuantity.text = "${cart.itemCount} arcticles"
         binding.cartTotal.text =  "${totalOrder} €"
@@ -87,7 +89,9 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
             val sharedPreferences = getSharedPreferences(RegisterActivity.USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
             val idUser = sharedPreferences.getInt(RegisterActivity.ID_USER, -1)
             if(idUser != -1){
-                sendOrder(idUser)
+                ///sendOrder(idUser)
+                val intent = Intent(this, OrderActivity::class.java)
+                startActivity(intent)
             }
         }
     }
