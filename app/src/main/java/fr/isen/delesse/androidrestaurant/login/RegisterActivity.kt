@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import fr.isen.delesse.androidrestaurant.cart.CartActivity
 
@@ -63,6 +64,8 @@ class RegisterActivity : AppCompatActivity() {
             url,
             jsonData,
             { response ->
+                var snackbar = Snackbar.make(binding.root, "votre compte a ete crée", Snackbar.LENGTH_SHORT)
+                snackbar.setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
                 setResult(Activity.RESULT_FIRST_USER)
                 finish()
             },

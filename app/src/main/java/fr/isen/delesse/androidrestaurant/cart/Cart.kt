@@ -44,6 +44,8 @@ class Cart(val items: MutableList<CartItem>): Serializable {
         editor.apply()
     }
 
+
+
     companion object {
         fun getCart(context: Context): Cart {
             val jsonFile = File(context.cacheDir.absolutePath + CART_FILE)
@@ -53,8 +55,13 @@ class Cart(val items: MutableList<CartItem>): Serializable {
             } else {
                 Cart(mutableListOf())
             }
-
         }
+
+        fun deleteCart(context: Context){
+            val jsonFile = File(context.cacheDir.absolutePath + CART_FILE)
+            jsonFile.delete()
+        }
+
         const val CART_FILE = "cart.json"
         const val ITEMS_COUNT = "ITEMS_COUNT"
         const val USER_PREFERENCES_NAME = "USER_PREFERENCES_NAME"

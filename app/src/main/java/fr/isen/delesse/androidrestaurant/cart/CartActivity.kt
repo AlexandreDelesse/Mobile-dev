@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
+import fr.isen.delesse.androidrestaurant.R
 import fr.isen.delesse.androidrestaurant.dishDetail.DishDetailActivity
 import fr.isen.delesse.androidrestaurant.databinding.ActivityCartBinding
 import fr.isen.delesse.androidrestaurant.login.RegisterActivity
@@ -40,12 +42,21 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
         parseCart(cart, 1)
 
         binding.cartOrderButton.setOnClickListener{
-            if(User().isConnected(this)){
-                sendOrder(User().getUserId(this))
+
+            if(Cart.getCart(this).itemCount > 0) {
+                if(User().isConnected(this)){
+                    sendOrder(User().getUserId(this))
+                    Cart.deleteCart(this)
+                    val intent = Intent(this, OrderActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    val intent = Intent(this, RegisterActivity::class.java)
+                    startActivityForResult(intent, REQUEST_CODE)
+                }
             } else {
-                val intent = Intent(this, RegisterActivity::class.java)
-                startActivityForResult(intent, REQUEST_CODE)
+                Snackbar.make(binding.root, "votre panier est vide", Snackbar.LENGTH_SHORT).show()
             }
+            reloadData(Cart.getCart(this))
         }
     }
 
@@ -89,7 +100,7 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
             val sharedPreferences = getSharedPreferences(RegisterActivity.USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
             val idUser = sharedPreferences.getInt(RegisterActivity.ID_USER, -1)
             if(idUser != -1){
-                ///sendOrder(idUser)
+                sendOrder(idUser)
                 val intent = Intent(this, OrderActivity::class.java)
                 startActivity(intent)
             }
@@ -123,7 +134,8 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
             jsonOrder,
             { response ->
                 Log.d("response order", response.toString())
-                Toast.makeText(this, "Votre commande a ete envoyé", Toast.LENGTH_SHORT).show()
+                var snackbar = Snackbar.make(binding.root, "commande envoyé avec succés", Snackbar.LENGTH_SHORT)
+                snackbar.setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
             },
             { error ->
                 error.message?.let {
