@@ -12,6 +12,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import fr.isen.delesse.androidrestaurant.R
 import fr.isen.delesse.androidrestaurant.dishDetail.DishDetailActivity
@@ -19,6 +20,7 @@ import fr.isen.delesse.androidrestaurant.databinding.ActivityCartBinding
 import fr.isen.delesse.androidrestaurant.login.RegisterActivity
 import fr.isen.delesse.androidrestaurant.network.Dish
 import fr.isen.delesse.androidrestaurant.network.NetworkConstant
+import fr.isen.delesse.androidrestaurant.order.Order
 import fr.isen.delesse.androidrestaurant.order.OrderActivity
 import fr.isen.delesse.androidrestaurant.user.User
 import org.json.JSONObject
@@ -45,10 +47,10 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
 
             if(Cart.getCart(this).itemCount > 0) {
                 if(User().isConnected(this)){
-                    sendOrder(User().getUserId(this))
+                    sendOrder(User.getUserId(this))
                     Cart.deleteCart(this)
                     val intent = Intent(this, OrderActivity::class.java)
-                    startActivity(intent)
+                    //startActivity(intent)
                 } else {
                     val intent = Intent(this, RegisterActivity::class.java)
                     startActivityForResult(intent, REQUEST_CODE)
@@ -110,7 +112,6 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
     private fun sendOrder (idUser: Int){
         var cart = Cart.getCart(this)
         var jsonOrder = parseCart(cart, idUser)
-        Log.d("order", jsonOrder.toString())
         makeRequest(jsonOrder)
 
     }
@@ -133,9 +134,10 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
             url,
             jsonOrder,
             { response ->
-                Log.d("response order", response.toString())
-                var snackbar = Snackbar.make(binding.root, "commande envoyé avec succés", Snackbar.LENGTH_SHORT)
-                snackbar.setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).show()
+                Log.d("response after order", response.toString())
+                val intent = Intent(this, OrderActivity::class.java)
+                intent.putExtra(OrderActivity.ORDER_LIST, response.toString())
+                startActivity(intent)
             },
             { error ->
                 error.message?.let {

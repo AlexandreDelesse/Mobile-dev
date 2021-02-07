@@ -6,10 +6,7 @@ import java.io.Serializable
 
 class User(): Serializable {
 
-    fun getUserId(context: Context): Int {
-        val sharedPreferences = context.getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        return sharedPreferences.getInt(USER_ID, -1)
-    }
+
 
     fun saveUser(idUser: Int, context: Context){
         val sharedPreferences = context.getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
@@ -25,6 +22,18 @@ class User(): Serializable {
     }
 
     companion object {
+
+        fun getUserId(context: Context): Int {
+            val sharedPreferences = context.getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            return sharedPreferences.getInt(USER_ID, -1)
+        }
+
+        fun Signout(context: Context){
+            val sharedPreferences = context.getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.remove(USER_ID)
+        }
+
         const val USER_PREFERENCES_NAME = "USER_PREFERENCES_NAME"
         const val USER_ID = "USER_ID"
     }

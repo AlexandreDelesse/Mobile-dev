@@ -2,16 +2,23 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/signout"
+        android:title="@string/cart"
+        app:actionLayout="@layout/menu_signout"
+        android:icon="@drawable/ic_signout"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/orders"
         android:title="@string/cart"
         app:actionLayout="@layout/menu_order"
         android:icon="@drawable/ic_orderhistory"
-        app:showAsAction="always"></item>
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/cart"
         android:title="@string/cart"
         app:actionLayout="@layout/menu_cart"
         android:icon="@drawable/ic_cart"
-        app:showAsAction="always"></item>
+        app:showAsAction="always" />
 </menu>

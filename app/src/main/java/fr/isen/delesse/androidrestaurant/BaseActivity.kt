@@ -4,9 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.Menu
+import android.view.Window
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.google.android.material.snackbar.Snackbar
 import fr.isen.delesse.androidrestaurant.cart.Cart
 import fr.isen.delesse.androidrestaurant.cart.CartActivity
 import fr.isen.delesse.androidrestaurant.login.LoginActivity
@@ -19,12 +21,19 @@ open class BaseActivity: AppCompatActivity() {
         menuInflater.inflate(R.menu.menu, menu)
         val menuView = menu?.findItem(R.id.cart)?.actionView
         val menuViewOrder = menu?.findItem(R.id.orders)?.actionView
+        val menuViewSignout = menu?.findItem(R.id.signout)?.actionView
         val countText = menuView?.findViewById(R.id.cartMenuText) as? TextView
         val count = getItemsCount()
         countText?.isVisible = count > 0
         countText?.text = count.toString()
 
 
+        menuViewSignout?.setOnClickListener {
+            User.Signout(this)
+            var snack = Snackbar.make(menuViewSignout, "deconnexion", Snackbar.LENGTH_SHORT)
+            snack.animationMode = Snackbar.ANIMATION_MODE_SLIDE
+            snack.show()
+        }
         menuView?.setOnClickListener{
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
@@ -39,6 +48,7 @@ open class BaseActivity: AppCompatActivity() {
                 startActivityForResult(intent, REQUEST_CODE)
             }
         }
+
         return true
     }
 

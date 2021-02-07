@@ -7,6 +7,7 @@ class NetworkConstant {
         const val PATH_REGISTER = "user/register"
         const val PATH_LOGIN = "user/login"
         const val PATH_ORDER = "user/order"
+        const val PATH_LIST_ORDER = "listorders"
 
         const val ID_SHOP = "id_shop"
         const val USER_FIRSTNAME = "firstname"

@@ -44,6 +44,13 @@ class Cart(val items: MutableList<CartItem>): Serializable {
         editor.apply()
     }
 
+    fun getTotal(): Float{
+        var total = 0F
+        items.forEach {
+            total += it.count.toFloat() * it.dish.prices.first().price.toFloat()
+        }
+        return total
+    }
 
 
     companion object {
@@ -60,7 +67,12 @@ class Cart(val items: MutableList<CartItem>): Serializable {
         fun deleteCart(context: Context){
             val jsonFile = File(context.cacheDir.absolutePath + CART_FILE)
             jsonFile.delete()
+            val sharedPreferences = context.getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            var editor = sharedPreferences.edit()
+            editor.remove(ITEMS_COUNT)
+            editor.apply()
         }
+
 
         const val CART_FILE = "cart.json"
         const val ITEMS_COUNT = "ITEMS_COUNT"

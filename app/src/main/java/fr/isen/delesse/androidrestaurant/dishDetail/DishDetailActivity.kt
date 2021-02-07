@@ -69,7 +69,7 @@ class DishDetailActivity : BaseActivity() {
     private fun refreshTotal(dish: Dish) {
         var result = dish.prices.first().price.toFloat() * this.countValue.toFloat()
         binding.countTextView.text = countValue.toString()
-        binding.totalButton.text = "TOTAL : ${result.toString()} €"
+        binding.totalButton.text = "TOTAL : ${result} €"
     }
 
     private fun addToCart(dish: Dish, count: Int) {
