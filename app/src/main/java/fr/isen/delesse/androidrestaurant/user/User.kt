@@ -16,12 +16,13 @@ class User(): Serializable {
         Log.d("user::save user", "user $idUser have been saved in preferences")
     }
 
-    fun isConnected(context: Context): Boolean {
-        val sharedPreferences = context.getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        return sharedPreferences.getInt(USER_ID, -1) != -1
-    }
+
 
     companion object {
+        fun isConnected(context: Context): Boolean {
+            val sharedPreferences = context.getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            return sharedPreferences.getInt(USER_ID, -1) != -1
+        }
 
         fun getUserId(context: Context): Int {
             val sharedPreferences = context.getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
@@ -32,6 +33,7 @@ class User(): Serializable {
             val sharedPreferences = context.getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.remove(USER_ID)
+            editor.apply()
         }
 
         const val USER_PREFERENCES_NAME = "USER_PREFERENCES_NAME"

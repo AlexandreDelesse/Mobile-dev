@@ -82,4 +82,8 @@ class Cart(val items: MutableList<CartItem>): Serializable {
 
 class CartItem(val dish: Dish, var count: Int): Serializable {
 
+    fun getTotalPrice(): Float{
+        var total = 0F
+        return dish.prices.first().price.toFloat() * count.toFloat()
+    }
 }

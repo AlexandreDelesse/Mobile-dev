@@ -15,6 +15,8 @@
     <string name="login_register">Register </string>
     <string name="login_login">Login </string>
     <string name="login_title">Veuillez vous conecter !</string>
+    <string name="login_noaccount">Vous n\'avez pas de compte ?</string>
+    <string name="login_createaccount">Créez en un !</string>
     <!-- Placeholder formulaire -->
     <string name="placeholder_firstname">Nom</string>
     <string name="placeholder_lastname">Prénom</string>

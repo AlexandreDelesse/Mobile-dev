@@ -46,11 +46,9 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
         binding.cartOrderButton.setOnClickListener{
 
             if(Cart.getCart(this).itemCount > 0) {
-                if(User().isConnected(this)){
+                if(User.isConnected(this)){
                     sendOrder(User.getUserId(this))
                     Cart.deleteCart(this)
-                    val intent = Intent(this, OrderActivity::class.java)
-                    //startActivity(intent)
                 } else {
                     val intent = Intent(this, RegisterActivity::class.java)
                     startActivityForResult(intent, REQUEST_CODE)
@@ -68,12 +66,6 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
         displayTotalCartDetails(cart)
     }
 
-    private fun startDishDetailActivity(dish: Dish) {
-        val intent = Intent(this, DishDetailActivity::class.java)
-        intent.putExtra(DishDetailActivity.DISH_EXTRA, dish)
-        startActivity(intent)
-    }
-
     override fun onDeleteItem(item: CartItem) {
         val cart = Cart.getCart(this)
         val itemToDelete = cart.items.firstOrNull { it.dish.name == item.dish.name }
@@ -84,16 +76,8 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
     }
 
     private fun displayTotalCartDetails(cart: Cart){
-        var totalOrder: Float = 0F
-        cart.items.forEach{
-            totalOrder = it.count * it.dish.prices.first().price.toFloat()
-        }
         binding.cartQuantity.text = "${cart.itemCount} arcticles"
-        binding.cartTotal.text =  "${totalOrder} €"
-    }
-
-    override fun onShowDetail(item: CartItem) {
-        TODO("Not yet implemented")
+        binding.cartTotal.text =  "${cart.getTotal()} €"
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -121,6 +105,7 @@ class CartActivity : AppCompatActivity(), CartCellInterface {
         jsonOrder.put(NetworkConstant.ID_SHOP, 1)
         jsonOrder.put("id_user", idUser)
         jsonOrder.put("msg", GsonBuilder().create().toJson(cart))
+        Log.d("json parsed order", jsonOrder.toString())
         return jsonOrder
 
 

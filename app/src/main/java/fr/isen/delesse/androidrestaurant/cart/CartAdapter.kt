@@ -12,7 +12,6 @@ import fr.isen.delesse.androidrestaurant.databinding.CartItemCellBinding
 
 interface CartCellInterface{
     fun onDeleteItem(item: CartItem)
-    fun onShowDetail(item: CartItem)
 }
 
 class CartAdapter(private val entries: Cart,
@@ -51,12 +50,12 @@ class CartAdapter(private val entries: Cart,
         private val cartItemPrice: TextView = itemsBinding.cartItemPrice
         private val cartItemImage: ImageView = itemsBinding.cartItemImage
         private val deleteButton: ImageView = itemsBinding.cartItemDelete
-        val layout = itemsBinding.root
 
         fun bind(cartItem: CartItem, delegate: CartCellInterface) {
             cartItemName.text = cartItem.dish.name
-            cartItemNb.text ="Quantity: ${cartItem.count.toString()}"
-            cartItemPrice.text = "${cartItem.dish.prices.first().price.toString()} €"
+            cartItemNb.text ="Quantity: ${cartItem.count}"
+            //TODO afficher le bon prix sur le panier
+            cartItemPrice.text = "${cartItem.dish.prices.first().price} €"
 
             var url: String? = null
             if(cartItem.dish.images.isNotEmpty() && cartItem.dish.images[0].isNotEmpty()) {

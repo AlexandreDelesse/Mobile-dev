@@ -28,6 +28,9 @@ class LoginActivity : AppCompatActivity() {
                 makeRequest()
             }
         }
+        binding.loginCreateAccount.setOnClickListener {
+            finish()
+        }
 
     }
 

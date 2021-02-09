@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import fr.isen.delesse.androidrestaurant.cart.Cart
 import fr.isen.delesse.androidrestaurant.cart.CartActivity
 import fr.isen.delesse.androidrestaurant.login.LoginActivity
+import fr.isen.delesse.androidrestaurant.login.RegisterActivity
 import fr.isen.delesse.androidrestaurant.order.OrderActivity
 import fr.isen.delesse.androidrestaurant.user.User
 
@@ -26,10 +27,17 @@ open class BaseActivity: AppCompatActivity() {
         val count = getItemsCount()
         countText?.isVisible = count > 0
         countText?.text = count.toString()
+        menuViewSignout?.isVisible = User.isConnected(this)
+
+
 
 
         menuViewSignout?.setOnClickListener {
-            User.Signout(this)
+            if(User.isConnected(this)){
+                User.Signout(this)
+                menuViewSignout.isVisible = false
+            }
+
             var snack = Snackbar.make(menuViewSignout, "deconnexion", Snackbar.LENGTH_SHORT)
             snack.animationMode = Snackbar.ANIMATION_MODE_SLIDE
             snack.show()
@@ -40,12 +48,12 @@ open class BaseActivity: AppCompatActivity() {
         }
 
         menuViewOrder?.setOnClickListener{
-            if(User().isConnected(this)){
+            if(User.isConnected(this)){
                 val intent = Intent(this, OrderActivity::class.java)
                 startActivity(intent)
             } else {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivityForResult(intent, REQUEST_CODE)
+                val intent = Intent(this, RegisterActivity::class.java)
+                startActivityForResult(intent, CartActivity.REQUEST_CODE)
             }
         }
 
